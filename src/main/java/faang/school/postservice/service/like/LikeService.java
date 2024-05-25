@@ -9,7 +9,6 @@ import faang.school.postservice.model.Comment;
 import faang.school.postservice.model.Like;
 import faang.school.postservice.model.Post;
 import faang.school.postservice.repository.CommentRepository;
-import faang.school.postservice.repository.LikeRepository;
 import faang.school.postservice.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.CrudRepository;
@@ -41,11 +40,16 @@ public class LikeService {
     }
 
     private List<UserDto> getUsersLikedObject(List<Like> likes) {
-        List<Long> usersLikedPost = likes.stream().map(Like::getUserId).distinct().toList();
+        List<Long> usersLikedPost = likes.stream()
+                .map(Like::getUserId)
+                .toList();
 
         List<List<Long>> usersLikedPostBatched = Lists.partition(usersLikedPost, BATCH_SIZE);
 
-        return usersLikedPostBatched.parallelStream().map(userServiceClient::getUsersByIds).flatMap(List::stream).toList();
+        return usersLikedPostBatched.parallelStream()
+                .map(userServiceClient::getUsersByIds)
+                .flatMap(List::stream)
+                .toList();
     }
 
     private <T> T getLikedObject(CrudRepository<T, Long> repository, long likedObjectId, LikeOperatingExceptionMessage exceptionMessage) {
