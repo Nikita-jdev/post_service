@@ -26,10 +26,15 @@ spring:
           name: user_ban
         notification_like_channel:
           name: notification_like_channel
+        calculations_channel:
+          name: calculations_channel
+        comment_event_channel:
+          name: comment_event_channel
 
   mvc:
     servlet:
       path: /api/v1
+
 
 server:
   port: 8081
@@ -56,6 +61,9 @@ payment-service:
   host: localhost
   port: 9080
 
+like:
+  endpoint:
+    context-path: "/api/v1/likes"
 scheduled:
   author-banner: "@daily"
 
