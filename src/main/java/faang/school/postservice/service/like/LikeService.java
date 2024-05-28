@@ -52,7 +52,10 @@ public class LikeService {
                 .toList();
     }
 
-    private <T> T getLikedObject(CrudRepository<T, Long> repository, long likedObjectId, LikeOperatingExceptionMessage exceptionMessage) {
-        return repository.findById(likedObjectId).orElseThrow(() -> new LikeOperatingException(exceptionMessage.getMessage()));
+    private <T> T getLikedObject(CrudRepository<T, Long> repository,
+                                 long likedObjectId,
+                                 LikeOperatingExceptionMessage exceptionMessage) {
+        return repository.findById(likedObjectId)
+                .orElseThrow(() -> new LikeOperatingException(exceptionMessage.getMessage()));
     }
 }
